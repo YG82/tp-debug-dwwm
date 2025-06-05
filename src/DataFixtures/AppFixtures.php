@@ -2,20 +2,21 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Network;
 use Faker\Factory;
 use App\Entity\Task;
 use App\Entity\Todo;
 use App\Entity\User;
+use App\Entity\Network;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use SebastianBergmann\CodeCoverage\Report\PHP;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     public function __construct(
-        private UserPasswordHasher $hasher
+        private UserPasswordHasherInterface $hasher
     )
     {
         
@@ -79,7 +80,7 @@ class AppFixtures extends Fixture
         $admin
             ->setEmail('admin@admin.com')
             ->setUsername('admin')
-            ->setPassword($this->hasher->hashPassword($user, 'admin123'))
+            ->setPassword($this->hasher->hashPassword($admin, 'admin123'))
             ->setRoles(['ROLE_ADMIN'])
             ->setIsMajor(true)
             ->setIsTerms(true)
@@ -148,6 +149,6 @@ class AppFixtures extends Fixture
             echo $todo->getName()."\n" . PHP_EOL;
         }
 
-        // $manager->flush();
+        $manager->flush();
     }
 }

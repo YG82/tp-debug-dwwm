@@ -17,6 +17,7 @@ class Todo
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]

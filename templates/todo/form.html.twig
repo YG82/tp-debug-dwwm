@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ pageTitle }}
+{% block title %}
+	{{ pageTitle }}
+{% endblock title %}
 
 {% block body %}
 	<header class="text-center py-8">
@@ -10,7 +12,7 @@
 		</p>
 	</header>
 
-    {{ form_errors(todoForm) }}
+	{{ form_errors(todoForm) }}
 
 	<div class="w-full p-2 rounded-md">
 		{{ form_start(todoForm) }}
@@ -24,18 +26,18 @@
 			{% endfor %}
 		</div>
 		<button type="button" class="add-task flex gap-2 items-center text-xs py-2" data-target="#tasks">
-            {{ ux_icon('lineicons:plus-circle', { class: 'h-4'}) }}
-            Ajouter une tâche
-        </button>
-        <div class="flex items-center gap-2 my-3">
-            <p class="text-xs">Rendre la liste publique ?</p>
-            <label class="checkbox relative inline-block w-8 h-4 shadow-inner rounded-full cursor-pointer">
-                {{ form_label(todoForm.is_public) }}
-                {{ form_widget(todoForm.is_public, {'attr': {'class': 'peer hidden'}}) }}
-                <span class="block w-full h-full bg-gray-300 rounded-full cursor-pointer transition-colors duration-300 peer-checked:bg-emerald-500 shadow"></span>
-                <span class="absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-4"></span>
-            </div>
-        </div>
+			{{ ux_icon('lineicons:plus-circle', { class: 'h-4'}) }}
+			Ajouter une tâche
+		</button>
+		<div class="flex items-center gap-2 my-3">
+			<p class="text-xs">Rendre la liste publique ?</p>
+			<label class="checkbox relative inline-block w-8 h-4 shadow-inner rounded-full cursor-pointer">
+				{{ form_label(todoForm.is_public) }}
+				{{ form_widget(todoForm.is_public, {'attr': {'class': 'peer hidden'}}) }}
+				<span class="block w-full h-full bg-gray-300 rounded-full cursor-pointer transition-colors duration-300 peer-checked:bg-emerald-500 shadow"></span>
+				<span class="absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-4"></span>
+			</div>
+		</div>
 		{{ form_row(todoForm.submit) }}
 		{{ form_end(todoForm) }}
 	</div>

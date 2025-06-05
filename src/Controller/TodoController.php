@@ -6,6 +6,7 @@ use App\Entity\Todo;
 use App\Form\TodoFormType;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,7 +50,7 @@ final class TodoController extends AbstractController
     }
     
     #[Route('/todos/edit/{ref}', name: 'todos_edit', methods: ['GET', 'POST'])]
-    public function edit(string $ref): Response
+    public function edit(string $ref ,Request $request): Response
     {
         $todo = $this->tr->findOneByRef($ref);
 
