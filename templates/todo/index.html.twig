@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes vos listes de tâches{% endblock %}
+
+{% block body %}
+    <header class="flex gap-4 items-center">
+        <img src={{ asset('media/images/default.png') }} alt="{{ app.user.username ?? 'Non renseigné' }}" class="h-20 rounded-full shadow hover:-translate-y-1 transform transition-all ease-in-out duration-300">
+        <div class="">
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-900">
+                {{ app.user.usernam ?? 'Non renseigné' }}
+            </h1>
+            <p class="text-xs text-neutral-500">Membre depuis {{ app.user.createdAt|time_diff }}</p>
+        </div>
+    </header>
+
+    <section class="mt-4 pt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            {% if app.user.todos|length > 0 %}
+                {% for todo in todos %}
+                    <a href="{{ path('todos_show', { ref: todo.ref }) }}" class="rounded-lg shadow p-4 bg-white hover:-translate-y-1 hover:shadow-md transition-all ease-in-out duration-300 relative">
+                        <h3 class="text-xl font-bold w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
+                            {{ todo.name }}
+                        </h3>
+                        <div class="flex gap-2 items-center mt-1">
+                            <div class="h-5 w-5 bg-gradient-to-r from-emerald-200 to-emerald-400 rounded-full"></div>
+                            <div class="flex flex-col">
+                                <p class="text-xs text-neutral-500">il y a {{ todo.createdAt|time_diff }}</p>
+                                <p class="text-xs text-neutral-500">{{ todo.tasks|length }} tâche{{ todo.tasks|length > 1 ? 's' : '' }}</p>
+                            </div>
+                        </div>
+                        <p class="text-xs bg-emerald-400 text-white absolute bottom-0 right-0 px-2 py-1 rounded-tl-xl">
+                            {{ todo.category ? todo.category|capitalize : 'Divers' }}
+                        </p>
+                    </a>
+                {% else %}
+                    <p class="text-neutral-500">Aucune liste de tâches pour le moment.</p>
+                {% endfor %}
+            {% else %}
+                <p class="text-neutral-500">Aucune liste de tâches pour le moment.</p>
+                <a href="{{ path('todos_add') }}" class="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-600 transition-all ease-in-out duration-300 text-center">
+                    Créer une liste de tâches
+                </a>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

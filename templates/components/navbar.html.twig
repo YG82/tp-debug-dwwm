@@ -1,0 +1,75 @@
+<div class="relative">
+	<div class="menu-overlay fixed z-50 h-screen w-full bg-emerald-950 hidden p-4">
+		<div class="flex justify-between items-center border-b border-emerald-50 pb-4">
+			<p class="dm-serif text-emerald-50 hover:-translate-y-1 transform transition-all ease-in-out duration-300 cursor-none">Menu</p>
+			<button id="menuClose" class="hover:-translate-y-1 transform transition-all ease-in-out duration-300">
+				{{ ux_icon('mdi:remove', { class: 'text-emerald-50 h-6'}) }}
+			</button>
+		</div>
+		<div class="flex flex-col">
+			<ul class="flex flex-col gap-4 mt-4 text-emerald-50 text-sm">
+				{% if app.user %}
+					<li class="hover:text-emerald-200">
+						<a href={{ path('todos_index') }} class="flex gap-2 items-center">
+							{{ ux_icon('lineicons:box-archive-1', { class: 'h-4' }) }}
+							Mes listes
+						</a>
+					</li>
+					<li class="hover:text-emerald-200">
+						<a href={{ path('todos_add') }} class="flex gap-2 items-center">
+							{{ ux_icon('lineicons:plus-circle', { class: 'h-4' }) }}
+							Créer une liste
+						</a>
+					</li>
+					<li class="hover:text-emerald-200">
+						<a href={{ path('search') }} class="flex gap-2 items-center">
+							{{ ux_icon('lineicons:search-2', { class: 'h-4' }) }}
+							Recherche
+						</a>
+					</li>
+				{% else %}
+					<li class="hover:text-emerald-200">
+						<a href={{ path('app_login') }} class="flex gap-2 items-center">
+							{{ ux_icon('lineicons:user-4', { class: 'h-4' }) }}
+							Se connecter
+						</a>
+					</li>
+					<li class="hover:text-emerald-200">
+						<a href={{ path('app_register') }}  class="flex gap-2 items-center">
+							{{ ux_icon('lineicons:star-fat', { class: 'h-4' }) }}
+							S'inscrire
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+			<div class="mt-10 py-6 flex flex-col items-center gap-2 text-[8px]">
+				{% if app.user %}
+					<a href={{ path('app_logout') }} class="flex gap-2 items-center text-xs text-red-400">
+						Déconnexion
+					</a>
+				{% endif %}
+				<hr class="w-1/2 border-emerald-800">
+				<p class="text-emerald-50 text-xs">todoz v1.0.0</p>
+				<div class="flex gap-2 pb-4 text-emerald-50">
+					<ul class="flex gap-2 uppercase text-emerald-700">
+						<li class="hover:text-emerald-200">
+							<a href="#">Mentions légales</a>
+						</li>
+						<li class="hover:text-emerald-200">
+							<a href="#">CGU</a>
+						</li>
+						<li class="hover:text-emerald-200">
+							<a href="#">RGPD</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="flex items-center justify-between gap-2 p-3">
+        <a href="/" class="logo text-3xl">todoz</a>
+        <button id="menuToggle" class="">
+            {{ ux_icon('lineicons:menu-hamburger-1', { class: 'text-emerald-800 h-6 closed'}) }}
+        </button>
+	</nav>
+</div>

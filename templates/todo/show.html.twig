@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ todo.name ?? 'Liste de tâches' }}
+{% endblock %}
+
+{% block body %}
+	<header class="">
+		<div class="flex flex-col gap-4">
+			<h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-900">
+				{{ todo.name ?? 'Non renseigné' }}
+			</h1>
+			<div class="flex gap-4 flex-wrap items-center text-xs text-neutral-500">
+				<p class="flex gap-1 items-center bg-white py-1 px-2 rounded-full">
+					{{ ux_icon('mdi:cube', { class: 'h-4 w-4'}) }}
+					{{ todo.category|capitalize }}
+				</p>
+				<p class="flex gap-1 items-center bg-white py-1 px-2 rounded-full">
+					{{ ux_icon('mdi:eye', { class: 'h-4 w-4'}) }}
+					{{ todo.isPublic ? 'Public' : 'Privé' }}
+				</p>
+				<p class="flex gap-1 items-center bg-white py-1 px-2 rounded-full">
+					{{ ux_icon('mdi:calendar-today', { class: 'h-4 w-4'}) }}
+					{{ todo.createdAt|time_diff }}
+				</p>
+			</div>
+		</div>
+	</header>
+
+	<section class="pt-4">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+			{% if todo.tasks|length > 0 %}
+				{% for task in todo.tasks %}
+					<div class="rounded-lg shadow p-4 bg-white hover:-translate-y-1 hover:shadow-md transition-all ease-in-out duration-300 relative">
+						<p class="w-full text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
+							{{ task.content }}
+						</p>
+					</div>
+				{% endfor %}
+			{% else %}
+				<p class="text-neutral-500">Aucune tâche pour le moment.</p>
+			{% endif %}
+		</div>
+	</section>
+
+	<hr class="my-4">
+
+	{% if todo.creator == app.user %}
+		<div class="flex gap-4 justify-center text-sm text-emerald-700">
+			<a href={{ path('todos_edit', { ref: todo.ref }) }} class="flex gap-1 items-center hover:text-emerald-900 hover:-translate-y-1 transform transition-all ease-in-out duration-300">
+				{{ ux_icon('mdi:pencil-box-outline', { class: 'h-4 w-4'}) }}
+				Modifier
+			</a>
+			<form action={{ path('todos_delete', { 'ref': todo.ref } ) }} method="post">
+				<input type="hidden" name="csrf_token" value="{{ csrf_token('todos_delete') }}">
+				<button type="submit" onclick="return confirm('Vous êtes sûr ?')" class="flex gap-1 items-center hover:-translate-y-1 transform transition-all ease-in-out duration-300">
+					{{ ux_icon('mdi:cross-circle-outline', { class: 'h-4 w-4'}) }}
+					Supprimer
+				</button>
+			</form>
+		</div>
+	{% endif %}
+

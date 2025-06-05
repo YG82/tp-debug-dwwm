@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+	<div class="grid place-items-center">
+		<div>
+			<h1 class="text-2xl font-bold mb-6 text-center">Inscription</h1>
+
+			{% for flash_error in app.flashes('verify_email_error') %}
+				<div class="text-xs text-center text-red-700 p-2 rounded mb-4">😬
+					{{ flash_error }}</div>
+			{% endfor %}
+
+			<form method="">
+				{{ form_start(registrationForm) }}
+
+                <div>
+                    {{ form_label(registrationForm.email) }}
+					{{ form_widget(registrationForm.email) }}
+					{{ form_errors(registrationForm.email) }}
+				</div>
+
+				<div>
+                    {{ form_label(registrationForm.username) }}
+                    {{ form_widget(registrationForm.username) }}
+					{{ form_errors(registrationForm.username) }}
+                </div>
+
+				<div>
+					{{ form_widget(registrationForm.plainPassword) }}
+					{{ form_errors(registrationForm.plainPassword) }}
+				</div>
+
+				<div class="flex items-center gap-2 my-3">
+					<p class="text-xs">Je confirme avoir plus de 18 ans</p>
+					<label class="checkbox relative inline-block w-8 h-4 shadow-inner rounded-full cursor-pointer">
+						{{ form_widget(registrationForm.is_major, {'attr': {'class': 'peer hidden'}}) }}
+						<span class="block w-full h-full bg-gray-300 rounded-full cursor-pointer transition-colors duration-300 peer-checked:bg-emerald-500 shadow"></span>
+						<span class="absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-4"></span>
+					</label>
+					{{ form_errors(registrationForm.is_major) }}
+				</div>
+
+				<div class="flex items-center gap-2 my-3">
+					<p class="text-xs">
+                        J'accepte les <a href="#" class="text-emerald-600 hover:underline">conditions d'utilisation</a>
+                    </p>
+					<label class="checkbox relative inline-block w-8 h-4 shadow-inner rounded-full cursor-pointer">
+						{{ form_widget(registrationForm.is_terms, {'attr': {'class': 'peer hidden'}}) }}
+						<span class="block w-full h-full bg-gray-300 rounded-full cursor-pointer transition-colors duration-300 peer-checked:bg-emerald-500 shadow"></span>
+						<span class="absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-4"></span>
+					</label>
+					{{ form_errors(registrationForm.is_terms) }}
+				</div>
+
+				<div class="flex items-center gap-2 my-3">
+					<p class="text-xs">
+                        J'accepte la <a href="#" class="text-emerald-600 hover:underline">politique de vie privée</a>
+                    </p>
+					<label class="checkbox relative inline-block w-8 h-4 shadow-inner rounded-full cursor-pointer">
+						{{ form_widget(registrationForm.is_gpdr, {'attr': {'class': 'peer hidden'}}) }}
+						<span class="block w-full h-full bg-gray-300 rounded-full cursor-pointer transition-colors duration-300 peer-checked:bg-emerald-500 shadow"></span>
+						<span class="absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-4"></span>
+					</label>
+					{{ form_errors(registrationForm.is_gpdr) }}
+				</div>
+
+				{{ form_end(registrationForm) }}
+			</form>
+
+            <div class="text-center mt-4 flex flex-col gap-2">
+                <a href="{{ path('app_login') }}" class="text-xs text-neutral-600 hover:underline">Déjà un compte ? Connectez-vous</a>
+            </div>
+		</div>
+	</div>
+{% endblock %}

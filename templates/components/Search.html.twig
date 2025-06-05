@@ -1,0 +1,30 @@
+<div{{ attributes }}>
+    <!-- component html -->
+    <h1 class="mb-2 text-lg">Résultats de votre recherche</h1>
+    
+    <input type="text" data-model="query" class="shadow" placeholder="Tapez un mot clé...">
+
+    <section class="pt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            {% if this.todos|length > 0 %}
+                {% for todo in this.todos %}
+                    <a href="{{ path('todos_show', { ref: todo.ref }) }}" class="rounded-lg shadow p-4 bg-white hover:-translate-y-1 hover:shadow-md transition-all ease-in-out duration-300 relative">
+                        <h3 class="w-full overflow-hidden whitespace-nowrap overflow-ellipsis">
+                            {{ todo.name }}
+                        </h3>
+                        <div class="flex gap-2 items-center mt-1">
+                            <div class="h-5 w-5 bg-gradient-to-r from-emerald-200 to-emerald-400 rounded-full"></div>
+                            <p class="text-xs italic text-neutral-500">il y a {{ todo.createdAt|time_diff }}, par {{ todo.creator.username }}</p>
+                        </div>
+                        <p class="text-xs bg-slate-200 absolute bottom-0 right-0 px-2 py-1 rounded-tl-xl">
+                            {{ ux_icon('mdi:eye', { class: 'h-5' }) }}
+                        </p>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="text-sm text-center text-neutral-500">Aucune liste trouvée pour "{{ this.query }}"</p>
+                
+            {% endif %}
+        </div>
+    </section>
+</div>
